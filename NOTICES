@@ -1,0 +1,9 @@
+NOTICES
+
+According to the Apache 2.0 License
+
+Modifications to the ferroMenu application include:
+	adding a amd function wrapper with necessary jquery dependencies.
+	adding relative menu locations according to nav parent's location, height and width
+	modifies dom directly by moving nav with nav items to ferroMenu location, removes nav from dom
+	specific changes are detailed in the git deltas
