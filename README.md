@@ -16,13 +16,13 @@ Modifications to the ferroMenu application include:
 ## Example
 
 
-`$("#nav").ferroMenu({
-    position    : "left-top",
-    delay       : 50,
-    rotation    : 720,
-    margin      : 20,
-    relative: true
-});`
+	$("#nav").ferroMenu({
+	    position    : "left-top",
+	    delay       : 50,
+	    rotation    : 720,
+	    margin      : 20,
+	    relative: true
+	});
 
 Above will create a ferroMenu from the passed in ul with child li's as menu items:
 * `relative` option will calculate the 9 ferroMenu anchor points according to the `# nav` ul's container or parentNode
