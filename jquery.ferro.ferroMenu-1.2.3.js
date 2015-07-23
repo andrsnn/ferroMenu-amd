@@ -155,23 +155,25 @@ if (isMobileOut()) {
         var elem = $(data.element);
         
         var calcs = {
+
           offset: elem.offset(),
-          height: elem.height(),
+          height: elem.outerHeight(),
           width: elem.width(),
           position: elem.position()
         };
+        
         var allCalcs = {
           x: {
             //all relative left property positions
-            left: calcs.position.left + calcs.offset.left,
-            center: (calcs.width / 2) + calcs.offset.left,
-            right: calcs.width - (calcs.offset.left * 2 + data.margin * 2)
+            left: calcs.position.left,
+            center: (calcs.width / 2),
+            right: calcs.width - $("#" + key).width() - data.margin
           },
           y: {
             //all relative top property positions
-            top: (calcs.position.top + calcs.offset.top),
-            center: ((calcs.height / 2) + calcs.offset.top),
-            bottom: (calcs.height - (calcs.offset.top * 2))
+            top: (calcs.position.top),
+            center: ((calcs.height / 2)),
+            bottom: calcs.height - $("#" + key).height() - data.margin
           }
         };
 
@@ -319,14 +321,16 @@ if (isMobileOut()) {
        * @return {undefined}
        */
       function init() {
+        $("#" + key).removeAttr("style");
+
+          $("#" + key).css({
+            "height": data.height,
+            "width":data.width
+          });
+
+          
         var relativeCalc = new RelativeCalc();
 
-
-        
-        
-        /*
-       
-*/
         
         $(s + " > li").each(function(k) {
           $(this).css({
@@ -338,22 +342,14 @@ if (isMobileOut()) {
           
           /** @type {boolean} */
           nodes[k] = false;
-          $("#" + key).removeAttr("style");
+          
+
           $("#" + key).removeClass("left-bottom center-bottom right-bottom left-top center-top right-top left-center right-center center-center");
           $("#" + key).addClass(position);
           $(this).addClass(activeClassName);
           if (data.relative){
 
           }
-
-          /*
-          var elem = $(s);
-            elem = elem[0].parentNode;
-            //check for undefined
-            elem = $(elem).height() /2;
-          */
-
-
           
           
           switch(position) {
@@ -416,6 +412,7 @@ if (isMobileOut()) {
                 marginTop : data.margin,
                 zIndex : 1E3
               });
+
               /** @type {number} */
               theta2 = -Math.PI / 2 + k * (Math.PI / 2 / sides);
               /** @type {number} */
@@ -584,14 +581,26 @@ if (isMobileOut()) {
         margin : 10,
         position : "left-bottom",
         relative: false,
+        wrapper: null,
         radius : 150,
         rotation : 0,
         opened : false,
-        openTime : 500
+        openTime : 500,
+        height: "60px",
+        width: "60px"
       };
+      if (this.selector === ""){
+        throw new Error("jquery id selectors are only supported at this time");
+      }
       var s = this.selector;
+      
       var data = $.extend({}, defaults, opts);
-      data["element"] = $(s)[0].parentNode;
+
+      
+
+      data["element"] = data.wrapper ? data.wrapper : 
+        $(s)[0].parentNode ? $(s)[0].parentNode : function() { throw new Error("Must supply wrapper option, or nav must have parentNode"); }() ;
+        
       /** @type {Array} */
       var nodes = new Array;
       var position = data.position;
@@ -638,6 +647,10 @@ if (isMobileOut()) {
       //remove list from current location due to css inconsistency, append to associated ferroMenu
       var list = $(s);
       list[0].parentNode.removeChild(list[0]);
+
+      
+
+      
 
       $("#" + key)[0].appendChild(list[0]);
       list.css({
