@@ -166,13 +166,13 @@ if (isMobileOut()) {
           x: {
             //all relative left property positions
             left: calcs.position.left,
-            center: (calcs.width / 2),
+            center: (calcs.width / 2) + calcs.position.left,
             right: calcs.width - $("#" + key).width() - data.margin
           },
           y: {
             //all relative top property positions
             top: (calcs.position.top),
-            center: ((calcs.height / 2)),
+            center: (calcs.height / 2) + calcs.position.top,
             bottom: calcs.height - $("#" + key).height() - data.margin
           }
         };
@@ -188,8 +188,10 @@ if (isMobileOut()) {
           event.preventDefault();
           /** @type {boolean} */
           changed = false;
+
           if (!d || !data.drag) {
             var failuresLink = $(event.target).parents(".ferromenu-controller").data("ferromenuitem");
+
             $.fn.ferroMenu.toggleMenu(failuresLink);
             /** @type {number} */
             startX = 0;
@@ -328,7 +330,7 @@ if (isMobileOut()) {
             "width":data.width
           });
 
-          
+
         var relativeCalc = new RelativeCalc();
 
         
@@ -648,6 +650,10 @@ if (isMobileOut()) {
       var list = $(s);
       list[0].parentNode.removeChild(list[0]);
 
+      if (list[0].style.display == "none"){
+        list[0].style.display = "inline";
+      }
+
       
 
       
@@ -787,7 +793,9 @@ if (isMobileOut()) {
           }
         }
       };
+      return this;
     }
+
   };
   /**
    * @param {?} mapper
