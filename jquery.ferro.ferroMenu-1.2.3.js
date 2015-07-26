@@ -184,14 +184,31 @@ if (isMobileOut()) {
        * @return {undefined}
        */
       function move(event) {
+        
         if (event.which == 1 || event.type == "touchend") {
           event.preventDefault();
           /** @type {boolean} */
           changed = false;
+          
+          var test = $(this).hasClass("open");
+          
+          //check for menu opened
+          if (!d && "#"+event.target.id != s && test === false){
+              
+              event.cancelBubble = true;
+              
+              
+              event.stopPropagation();
+              return;
+            }
 
           if (!d || !data.drag) {
             var failuresLink = $(event.target).parents(".ferromenu-controller").data("ferromenuitem");
 
+            /*
+            
+            */
+            
             $.fn.ferroMenu.toggleMenu(failuresLink);
             /** @type {number} */
             startX = 0;
@@ -338,7 +355,7 @@ if (isMobileOut()) {
           $(this).css({
             display : "inline-block",
             position : "absolute",
-            zIndex : 999            
+            zIndex : -1            
           });
           
           
@@ -646,12 +663,15 @@ if (isMobileOut()) {
         opacity : 0
       });
 
+
+
       //remove list from current location due to css inconsistency, append to associated ferroMenu
       var list = $(s);
       list[0].parentNode.removeChild(list[0]);
 
       if (list[0].style.display == "none"){
         list[0].style.display = "inline";
+        list[0].style.zIndex = 1001;
       }
 
       
@@ -698,6 +718,7 @@ if (isMobileOut()) {
        * @return {undefined}
        */
       $.fn.ferroMenu.refreshMenu = function() {
+
         init();
       };
       /**
@@ -725,7 +746,12 @@ if (isMobileOut()) {
             }
           });
           if ($dropdown != null) {
+
             if ($dropdown.hasClass("open")) {
+
+              
+              $dropdown.children("*").css('z-index', 999);
+
               $(el + " > li").each(function(x) {
                 /** @type {boolean} */
                 nodes[x] = true;
@@ -759,6 +785,10 @@ if (isMobileOut()) {
               });
               fireEvent("menuopened");
             } else {
+
+              
+              $dropdown.children("*").css('z-index', -1);
+
               $(el + " > li").each(function(depth) {
                 /** @type {boolean} */
                 nodes[depth] = true;
@@ -792,7 +822,10 @@ if (isMobileOut()) {
             }
           }
         }
+
       };
+      
+      
       return this;
     }
 
