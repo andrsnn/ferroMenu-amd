@@ -191,16 +191,30 @@ if (isMobileOut()) {
           changed = false;
           
           var test = $(this).hasClass("open");
+
           
           //check for menu opened
-          if (!d && "#"+event.target.id != s && test === false){
-              
-              event.cancelBubble = true;
+
+          if (!d){
+            if ("#"+event.target.id != s && test === false){
+               event.cancelBubble = true;
               
               
               event.stopPropagation();
               return;
             }
+          }
+          else {
+            if ("#"+event.target.id != s && test === false){
+               event.cancelBubble = true;
+              
+              
+              event.stopPropagation();
+              
+            }
+          }
+
+        
 
           if (!d || !data.drag) {
             var failuresLink = $(event.target).parents(".ferromenu-controller").data("ferromenuitem");
@@ -219,6 +233,7 @@ if (isMobileOut()) {
             /** @type {number} */
             _startY = 0;
           } else {
+            
             /** @type {boolean} */
             d = false;
 

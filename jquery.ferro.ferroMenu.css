@@ -45,6 +45,19 @@
 	background:#6e737b;
 }
 
+.ferromenu-controller .label li {
+	background-color: black;
+	-webkit-border-radius: 50%;
+	height: 50px;
+	width: 50px;
+
+}
+
+.ferromenu-controller .label li a {
+	position: relative;
+	top: 15px;
+}
+/*
 #nav li,#nav2 li{
 	color:#f2f2f2;
 	text-align:center;
@@ -68,3 +81,4 @@
 #nav li.mobile a:active,#nav2 li.mobile a:active{
 	opacity:0.7;
 }
+*/
